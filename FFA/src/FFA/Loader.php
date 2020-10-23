@@ -25,44 +25,40 @@ use RuntimeException;
 class Loader extends PluginBase implements Listener {
 	
 	/** @var Loader[] */
-	protected static $pluginLogger = null;
+	protected static $instance; //Es inutil declarar un valor a una variable que se llenara con codigo.
 	
-	public function onLoad(){
-		//TODO:
-		self::$pluginLogger = $this;
+	public function onLoad() : void {
+		self::$instance = $this;
 	}
 	
-	public function onEnable(){
-		//TODO:
+	public function onEnable() : void {
 		$this->getServer()->getCommandMap()->register("/ffa", new Command());
 	}
 	
-	public function onDisable(){
-		//TODO:
-	}
-	
 	/**
-	 * @return Loader[]
+	 * @return self
 	 */
-	public static function getInstance() : Loader {
-		if(self::$pluginLogger === null){
+	public static function getInstance() : self {
+		/*
+		* Codigo Inutil.
+		if(self::$instance === null){
 			throw new RuntimeException("Can't instantiate main class");
-		}
-		return self::$pluginLogger;
+		}*/
+		return self::$instance;
 	}
 		
 	/**
 	 * @param String $arenaName
 	 * @return bool
 	 */
-	public function isArena(String $arenaName) : bool {
+	public function isArena(string $arenaName) : bool {
 		$config = new Config($this->getDataFolder()."config.yml", Config::YAML);
 		if($config->exists($arenaName)){
 			return true;
 		}else{
 			return false;
 		}
-		return false;
+		//return false; Otra cosa inutil.
 	}
 	
 	/**
@@ -108,5 +104,7 @@ class Loader extends PluginBase implements Listener {
 		$player->teleport($this->getPositionSpawn());
 	}
 }
+
+//No uses funciones para un pedazo de codigo, se ve mal.
 
 ?>
